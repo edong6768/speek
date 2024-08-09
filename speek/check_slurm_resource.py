@@ -99,6 +99,12 @@ def get_slurm_resource():
     ##############################################
 
     partitions, jobs = map(get_scontrol_dict, ('Partition', 'Job'))
+    
+    gres_names = ['GRES/gpu', 'gres/gpu']
+    
+    for gres in gres_names:
+        if gres in partitions[[*partitions.keys()][0]]['TRESBillingWeights']:
+            break 
 
     # partitions = {k: v for k, v in partitions.items() if 'cpu' not in k}
 
@@ -125,7 +131,7 @@ def get_slurm_resource():
             user, gpu = job['UserId'].split('(')[0].strip(), job['Partition']
             gpu_count = int(job.get('TresPerNode', 'gres:gpu:0').split(':')[-1])
 
-            if partitions[gpu]['TRESBillingWeights']['GRES/gpu']=='0': continue
+            if partitions[gpu]['TRESBillingWeights'][gres]=='0': continue
             
             # user status
             u_stat = user_status.get(user, NewState(status))
@@ -169,7 +175,7 @@ def get_slurm_resource():
 
 
     for gpu, info in partitions.items():
-        if info['TRESBillingWeights']['GRES/gpu']=='0': continue
+        if info['TRESBillingWeights'][gres]=='0': continue
         count = int(info['TRES']['gres/gpu'])
         
         gpu_resource[gpu] = gpu_resource.get(gpu, NewState(resource))
@@ -199,8 +205,8 @@ def get_slurm_resource():
     table1 = Table(title="Cluster Usage")
 
     # add columns
-    partitions_list = [p for p in sorted({*partitions.keys()} - resource) if partitions[p]['TRESBillingWeights']['GRES/gpu']!='0']
-    partitions_list = sorted(partitions_list, key=lambda x: gpu_resource[x]['Total']*float(partitions[x]['TRESBillingWeights']['GRES/gpu']), reverse=True)
+    partitions_list = [p for p in sorted({*partitions.keys()} - resource) if partitions[p]['TRESBillingWeights'][gres]!='0']
+    partitions_list = sorted(partitions_list, key=lambda x: gpu_resource[x]['Total']*float(partitions[x]['TRESBillingWeights'][gres]), reverse=True)
     table1.add_column("User")
     for i, p in enumerate(partitions_list):
         table1.add_column(get_state(float(gpu_resource[p]['Usage'][:-1])) + p, justify="right")
@@ -251,7 +257,7 @@ def get_slurm_resource():
         for s in sorted(status, reverse=True):
             jobs_f = {k: {jn: j for jn, j in v.items() if j[s]} for k, v in jobs.items() if any(j[s] for j in v.values())}
             for i, (job_name, job) in enumerate(jobs_f.items()):
-                job_sorted = sorted(job.keys(), key=lambda x: gpu_resource[x]['Total']*float(partitions[x]['TRESBillingWeights']['GRES/gpu']), reverse=True)
+                job_sorted = sorted(job.keys(), key=lambda x: gpu_resource[x]['Total']*float(partitions[x]['TRESBillingWeights'][gres]), reverse=True)
                 for j, gpu in enumerate(job_sorted):
                     ids = job[gpu][s]
                     table2.add_row(s if i+j==0 else '', job_name if j==0 else '', gpu, str(len(ids)), consecutor([id for id, _ in ids]), end_section=((i==len(jobs_f)-1) and (j==len(job_sorted)-1)))
