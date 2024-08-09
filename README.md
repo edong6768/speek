@@ -31,3 +31,22 @@ $ speek [-h] [-u USER] [-l] [-f FILE] [-t T_AVAIL]
 |`-l`|`--live`| Live display of speek every 1 seconds. |
 |`-f` `FILE`|`--file` `FILE`| Specify file for user info. |
 |`-t` `T_AVAIL`|`--t_avail` `T_AVAIL`| Time window width for upcomming release in {m:minutes, h:hours, d:days}. (default: 5 m) |
+
+
+## Structure and Tag
+
+### Partition usage
+|Tag|Usage|
+|-|-|
+|☠️|100%|
+|🔥|90~100%|
+|❄️|0~10%|
+|🏖️|0%|
+
+### User usage
+|Tag|Description|
+|-|-|
+|🥇🥈🥉|First~Third place based on usage|
+|🚩|Pareto line (🥇~🚩 consists 80% of usage)|
+|👑|Top user of partition|
+|⏳|Top pended user of partition|
