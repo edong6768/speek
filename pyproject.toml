@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["speek"]
+
+[project]
+name = "speek"
+version = "0.0.1"
+description = "Peek into slurm's resource info such as GPU avaiability, usage per user, job status, and more."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {file = "LICENSE"}
+keywords = ["slurm"]
+authors = [
+  {name = "Dongyeop Lee", email = "dylee23@postech.ac.kr"},
+]
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: System :: Monitoring",
+    "Topic :: Utilities",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    'rich',
+]
+
+[project.scripts]
+speek = "speek.check_slurm_resource:main"
+
+[project.urls]
+Repository = "https://github.com/edong6768/speek.git"
