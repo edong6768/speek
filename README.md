@@ -13,8 +13,7 @@
 
 ## Installation
 ```sh
-git clone https://github.com/edong6768/speek.git
-pip install -e ~/speek
+pip install git+https://github.com/edong6768/speek.git
 ```
 
 
