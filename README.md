@@ -19,6 +19,8 @@ pip install -e ~/speek
 
 
 ## Usage
+> [!Important]
+> Make sure to activate the conda environment that has speek installed before using it.
 
 ```sh
 $ speek [-h] [-u USER] [-l] [-f FILE] [-t T_AVAIL]
