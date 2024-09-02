@@ -1,6 +1,6 @@
 # 🔍 speek
 
-**speek** lets you peeks into slurm resource info such as GPU avaiability, usage per user, job status, and more.
+**speek** lets you peek into slurm resource info such as GPU avaiability, usage per user, job status, and more.
 
 ![image](assets/screen.png)
 
